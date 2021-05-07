@@ -1,36 +1,65 @@
+
+/**
+*
+* @file main.c
+*
+*/
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
+#include "fonction.h"
+
 int main()
 {
-                        
+	personne p;
+     Ennemi  e; 
+	Ennemi2 e2;                  
      int done=1;
-     Enemie e1;
-SDL_Surface* switchFullScreen(void);
-
-  init_enemie(&e1,1);
-
-  SDL_Surface * screen = NULL;
-  SDL_Surface * Ennemie = NULL;
-
-
-  SDL_Rect posecran;
-  SDL_Rect positione;
-
-
-  posecran.x = 0;
-  posecran.y = 0;
-  position0.x = 1500;
-  position0.y = 500;
-  positione.x = 900;
-  positione.y = 500;
+     SDL_Event event; 
+     SDL_Surface *screen ;
+     SDL_Surface *bg;
 
 
 
+SDL_Init(SDL_INIT_VIDEO) ;
 
+bg = SDL_SetVideoMode(1800, 900, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
+
+
+initEnnemi(&e,&e2,&p);  
+init_perso(&p);
+//SDL_BlitSurface(p.perso,NULL,screen,&p.posperso);
 
  while(done)
 { 
 
-void initEnnemi(Ennemi*e)
-void afficherEnnemi(Ennemi e, SDL_Surface * screen)
-void animerEnnemi( Ennemi * e)
 
+afficherEnnemi(e,e2, screen);
+
+animerEnnemi2( &e2);
+
+animerEnnemi( &e);
+
+deplacer( &e);
+
+collisionBB( &p, &e2) ;
+
+deplacerIA( &e2 ,&p);
+
+SDL_WaitEvent(&event);
+        switch(event.type)
+        {
+            case SDL_QUIT:
+                done = 0;
+                break;
+               SDL_Flip(e.image);
+}
+}
+SDL_Flip(screen);
+  SDL_FreeSurface(screen);
+  SDL_Quit();
 }
